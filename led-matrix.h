@@ -16,8 +16,8 @@ class RGBMatrix {
   // Here the set-up  [>] [>]
   //                         v
   //                  [<] [<]   ... so column 65..127 are backwards.
-  int width() const { return 64; }
-  int height() const { return 64; }
+  int width() const { return 128; }
+  int height() const { return 32; }
   void SetPixel(uint8_t x, uint8_t y,
                 uint8_t red, uint8_t green, uint8_t blue);
 

@@ -16,11 +16,6 @@ class PixelObject : public node::ObjectWrap {
   ~PixelObject();
 
   static v8::Handle<v8::Value> New(const v8::Arguments& args);
-  // static v8::Handle<v8::Value> SetX(const v8::Arguments& args);
-  // static v8::Handle<v8::Value> SetY(const v8::Arguments& args);
-  // static v8::Handle<v8::Value> SetR(const v8::Arguments& args);
-  // static v8::Handle<v8::Value> SetG(const v8::Arguments& args);
-  // static v8::Handle<v8::Value> SetB(const v8::Arguments& args);
   static v8::Persistent<v8::Function> constructor;
  
 };

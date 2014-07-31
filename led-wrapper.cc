@@ -59,14 +59,14 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 	fprintf(stderr, "obj unwrapped\n");
 	// Create a RgbMatrix and set the pixels
-	GPIO* io;
+	GPIO io;
 	fprintf(stderr, "GPIO created\n");
-  	if (!io->Init())
+  	if (!io.Init())
     	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
     fprintf(stderr, "GPIO SET UP\n");
   	// The matrix, our 'frame buffer'.
-  	RGBMatrix m(io);
+  	RGBMatrix m(&io);
 
   	//for(int i = 0; i < arrayLength; i++) {
   	//	Handle<PixelObject> obj = Handle<PixelObject>::Cast(pixelArray->Get(Integer::New(i)));
