@@ -114,22 +114,28 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	// The matrix, our 'frame buffer'.
   	RGBMatrix m(&io);
 
-  	//for(int i = 0; i < arrayLength; i++) {
-  	//	Handle<Object> obj = Handle<Object>::Cast(pixelArray->Get(Integer::New(i)));
-  		//pixelArray->Get(Integer::New(i))->ToObject();
-  	// fprintf(stderr, "SET PIXEL X: " + obj->x_);
-  	// fprintf("SET PIXEL Y: " + obj->y_);
-  	// fprintf("SET PIXEL R: " + obj->r_);
-  	// fprintf("SET PIXEL G: " + obj->g_);
-  	// fprintf("SET PIXEL B: " + obj->b_);
-  	// m.SetPixel(obj->x_, obj->y_, obj->r_, obj->g_, obj->b_);
-  	// //}
+  	int tempX = 0;
+  	int tempY = 0;
+  	while(i < arrayLength) {
+  		//Handle<Object> obj = Handle<Object>::Cast(pixelArray->Get(Integer::New(i)));
+  		ignore = pixelArray->Get(Integer::New(i));
+  		tempB = pixelArray->Get(integer::New(i+1));
+  		tempG = pixelArray->Get(Integer::New(i+2));
+  		tempR = pixelArray->Get(Integer::New(i+3));
 
-  	// m.UpdateScreen();
-  	// usleep(500000);
+	  	m.SetPixel(tempX, tempY, tempR, tempG, tempB);
+	  	if(tempX == 127) {
+	  		tempX = 0;
+	  		tempY ++;
+	  	}
 
-  	// m.ClearScreen();
-   //  m.UpdateScreen();
+	}
+
+  	m.UpdateScreen();
+  	usleep(500000);
+
+  	m.ClearScreen();
+    m.UpdateScreen();
 	return scope.Close(Undefined());
 }
 
