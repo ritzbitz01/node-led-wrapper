@@ -95,7 +95,7 @@ Handle<Value> LedWrapper::New(const Arguments& args) {
 }
 
 Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
-	fprintf(stderr, "CALLING SET PIXELS\n");
+	//fprintf(stderr, "CALLING SET PIXELS\n");
 	// Arguments can either be a single Pixel, or a Pixel array.
 	HandleScope scope;
 
@@ -107,17 +107,17 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	//Array* pixelArray = args[0];
 	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 
-	int arrayLength = pixelArray->Length();
+	//int arrayLength = pixelArray->Length();
 	fprintf(stderr, "Pixel array length %d", arrayLength );
 	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
-	fprintf(stderr, "obj unwrapped\n");
+	//fprintf(stderr, "obj unwrapped\n");
 	// Create a RgbMatrix and set the pixels
 	GPIO io;
-	fprintf(stderr, "GPIO created\n");
+	//fprintf(stderr, "GPIO created\n");
   	if (!io.Init())
     	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
-    fprintf(stderr, "GPIO SET UP\n");
+    //fprintf(stderr, "GPIO SET UP\n");
   	// The matrix, our 'frame buffer'.
   	RGBMatrix m(&io);
 
@@ -138,7 +138,7 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   		i++;
   		tempR = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
   		i++;
-  		fprintf(stderr, "SETTING PIXEL: x:%d y:%d r:%d g:%d b:%d", tempX, tempY, tempR, tempG, tempB);
+  		
 	  	m.SetPixel(tempX, tempY, tempR, tempG, tempB);
 	  	if(tempX == 127) {
 	  		tempX = 0;
@@ -148,7 +148,7 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	  	}
 
 	}
-	fprintf(stderr, "UPDATING SCREEN");
+	//fprintf(stderr, "UPDATING SCREEN");
   	m.UpdateScreen();
   	usleep(5000000);
 

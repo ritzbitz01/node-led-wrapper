@@ -21,3 +21,14 @@ obj.setPixels(pixelArray);
 //console.log( obj.plusOne() ); // 11
 //console.log( obj.plusOne() ); // 12
 //console.log( obj.plusOne() ); // 13
+
+[2,2]
+[3,2]
+[4,2]
+[5,2]
+[2,3]
+[2,4]
+[2,5]
+[2,6]
+[2,7]
+[2,8]
