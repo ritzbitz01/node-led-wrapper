@@ -23,7 +23,6 @@ void LedWrapper::Init(Handle<Object> exports) {
   tpl->SetClassName(String::NewSymbol("LedWrapper"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
   // Prototype
-  fprintf(stderr, "CALLING PROTOTYPE");
   //NODE_SET_PROTOTYPE_METHOD(tpl, "setPixels", SetPixels);
   tpl->PrototypeTemplate()->Set(String::NewSymbol("setPixels"),
        FunctionTemplate::New(SetPixels)->GetFunction());
@@ -35,7 +34,6 @@ Handle<Value> LedWrapper::New(const Arguments& args) {
   HandleScope scope;
 
   if (args.IsConstructCall()) {
-  	fprintf(stderr, "CALLING CONSTRUCTOR");
     // Invoked as constructor: `new MyObject(...)`
     //double value = args[0]->IsUndefined() ? 0 : args[0]->NumberValue();
     LedWrapper* obj = new LedWrapper();
@@ -43,7 +41,6 @@ Handle<Value> LedWrapper::New(const Arguments& args) {
     return args.This();
   } else {
     // Invoked as plain function `MyObject(...)`, turn into construct call.
-    fprintf(stderr, "NOT CALLING CONSTRUCTOR");
     const int argc = 1;
     Local<Value> argv[argc] = { args[0] };
     return scope.Close(constructor->NewInstance(argc, argv));
@@ -62,14 +59,14 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 	fprintf(stderr, "obj unwrapped\n");
 	// Create a RgbMatrix and set the pixels
-	GPIO io;
-	fprintf(stderr, "GPIO created");
-  	if (!io.Init())
-    	fprintf(stderr, "ERROR SETTING UP GPIO");
+	GPIO* io;
+	fprintf(stderr, "GPIO created\n");
+  	if (!io->Init())
+    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
     fprintf(stderr, "GPIO SET UP\n");
   	// The matrix, our 'frame buffer'.
-  	RGBMatrix m(&io);
+  	RGBMatrix m(io);
 
   	//for(int i = 0; i < arrayLength; i++) {
   	//	Handle<PixelObject> obj = Handle<PixelObject>::Cast(pixelArray->Get(Integer::New(i)));
