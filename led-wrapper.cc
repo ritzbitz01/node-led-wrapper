@@ -122,7 +122,7 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	RGBMatrix m(&io);
 
 	Local<v8::Integer> ignore;
-  	int tempX = 0;
+  	int tempX = 127;
   	int tempY = 0;
   	int tempB;
   	int tempG;
@@ -140,11 +140,11 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   		i++;
   		
 	  	m.SetPixel(tempX, tempY, tempR, tempG, tempB);
-	  	if(tempX == 127) {
-	  		tempX = 0;
+	  	if(tempX == 0) {
+	  		tempX = 127;
 	  		tempY ++;
 	  	} else {
-	  		tempX ++;
+	  		tempX --;
 	  	}
 
 	}
