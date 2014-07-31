@@ -124,10 +124,14 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	while(i < arrayLength) {
   		//Handle<Object> obj = Handle<Object>::Cast(pixelArray->Get(Integer::New(i)));
   		ignore = pixelArray->Get(Integer::New(i))->ToInteger();
-  		tempB = pixelArray->Get(Integer::New(i+1))->ToInteger()->Value();
-  		tempG = pixelArray->Get(Integer::New(i+2))->ToInteger()->Value();
-  		tempR = pixelArray->Get(Integer::New(i+3))->ToInteger()->Value();
-
+  		i++;
+  		tempB = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+  		i++;
+  		tempG = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+  		i++;
+  		tempR = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+  		i++;
+  		fprintf(stderr, "SETTING PIXEL: x:%d y:%d r:%d g:%d b:%d", tempX, tempY, tempR, tempG, tempB);
 	  	m.SetPixel(tempX, tempY, tempR, tempG, tempB);
 	  	if(tempX == 127) {
 	  		tempX = 0;
@@ -135,9 +139,9 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	  	}
 
 	}
-
+	fprintf(stderr, "UPDATING SCREEN");
   	m.UpdateScreen();
-  	usleep(500000);
+  	usleep(5000000);
 
   	m.ClearScreen();
     m.UpdateScreen();
