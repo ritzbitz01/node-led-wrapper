@@ -85,7 +85,10 @@ INCS_Release := \
 OBJS := \
 	$(obj).target/$(TARGET)/addonledwrapper.o \
 	$(obj).target/$(TARGET)/led-wrapper.o \
-	$(obj).target/$(TARGET)/PixelObject.o
+	$(obj).target/$(TARGET)/PixelObject.o \
+	$(obj).target/$(TARGET)/led-matrix.o \
+	$(obj).target/$(TARGET)/gpio.o \
+	$(obj).target/$(TARGET)/thread.o
 
 # Add to the list of files we specially track dependencies for.
 all_deps += $(OBJS)

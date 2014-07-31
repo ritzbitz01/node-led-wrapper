@@ -48,12 +48,13 @@ uint32_t GPIO::InitOutputs(uint32_t outputs) {
 
 // Based on code example found in http://elinux.org/RPi_Low-level_peripherals
 bool GPIO::Init() {
+  //fprintf("IN GPIO INIT\n");
   int mem_fd;
   if ((mem_fd = open("/dev/mem", O_RDWR|O_SYNC) ) < 0) {
     perror("can't open /dev/mem: ");
     return false;
   }
-
+  //fprintf(stderr, "MAPPING GPIO");
   char *gpio_map =
     (char*) mmap(NULL,             //Any adddress in our space will do
          BLOCK_SIZE,       //Map length
