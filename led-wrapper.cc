@@ -136,6 +136,8 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	  	if(tempX == 127) {
 	  		tempX = 0;
 	  		tempY ++;
+	  	} else {
+	  		tempX ++;
 	  	}
 
 	}
