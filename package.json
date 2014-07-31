@@ -1,8 +1,25 @@
 {
-  "name": "object_wrap",
+  "name": "pi-led-matrix",
   "version": "0.0.0",
-  "description": "Node.js Addons Example #6",
-  "main": "addon.js",
-  "private": true,
-  "gypfile": true
+  "description": "Module for driving an LED matrix from a Raspberry Pi B/B+. Built around H. Zeller's work here https://github.com/hzeller/rpi-rgb-led-matrix.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ritzbitz01/node-led-wrapper.git"
+  },
+  "keywords": [
+    "raspberry",
+    "pi",
+    "led"
+  ],
+  "license": "MIT",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/ritzbitz01/node-led-wrapper/issues"
+  },
+  "homepage": "https://github.com/ritzbitz01/node-led-wrapper"
 }
