@@ -114,22 +114,39 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	// The matrix, our 'frame buffer'.
   	RGBMatrix m(&io);
 
-  	//for(int i = 0; i < arrayLength; i++) {
-  	//	Handle<Object> obj = Handle<Object>::Cast(pixelArray->Get(Integer::New(i)));
-  		//pixelArray->Get(Integer::New(i))->ToObject();
-  	// fprintf(stderr, "SET PIXEL X: " + obj->x_);
-  	// fprintf("SET PIXEL Y: " + obj->y_);
-  	// fprintf("SET PIXEL R: " + obj->r_);
-  	// fprintf("SET PIXEL G: " + obj->g_);
-  	// fprintf("SET PIXEL B: " + obj->b_);
-  	// m.SetPixel(obj->x_, obj->y_, obj->r_, obj->g_, obj->b_);
-  	// //}
+	Local<v8::Integer> ignore;
+  	int tempX = 0;
+  	int tempY = 0;
+  	int tempB;
+  	int tempG;
+  	int tempR;
+  	int i = 0;
+  	while(i < arrayLength) {
+  		//Handle<Object> obj = Handle<Object>::Cast(pixelArray->Get(Integer::New(i)));
+  		ignore = pixelArray->Get(Integer::New(i))->ToInteger();
+  		i++;
+  		tempB = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+  		i++;
+  		tempG = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+  		i++;
+  		tempR = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+  		i++;
+  		fprintf(stderr, "SETTING PIXEL: x:%d y:%d r:%d g:%d b:%d", tempX, tempY, tempR, tempG, tempB);
+	  	m.SetPixel(tempX, tempY, tempR, tempG, tempB);
+	  	if(tempX == 127) {
+	  		tempX = 0;
+	  		tempY ++;
+	  	} else {
+	  		tempX ++;
+	  	}
 
-  	// m.UpdateScreen();
-  	// usleep(500000);
+	}
+	fprintf(stderr, "UPDATING SCREEN");
+  	m.UpdateScreen();
+  	usleep(5000000);
 
-  	// m.ClearScreen();
-   //  m.UpdateScreen();
+  	m.ClearScreen();
+    m.UpdateScreen();
 	return scope.Close(Undefined());
 }
 
