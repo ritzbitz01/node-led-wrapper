@@ -8,7 +8,7 @@ Release/obj.target/led-wrapper/addonledwrapper.o: ../addonledwrapper.cc \
   /Users/uritzry/.node-gyp/0.10.18/deps/v8/include/v8.h \
   /Users/uritzry/.node-gyp/0.10.18/deps/v8/include/v8stdint.h \
   /Users/uritzry/.node-gyp/0.10.18/src/node_object_wrap.h \
-  ../led-wrapper.h ../pixelobject.h
+  ../led-wrapper.h ../pixelobject.h ../led-matrix.h ../gpio.h
 ../addonledwrapper.cc:
 /Users/uritzry/.node-gyp/0.10.18/src/node.h:
 /Users/uritzry/.node-gyp/0.10.18/deps/uv/include/uv.h:
@@ -20,3 +20,5 @@ Release/obj.target/led-wrapper/addonledwrapper.o: ../addonledwrapper.cc \
 /Users/uritzry/.node-gyp/0.10.18/src/node_object_wrap.h:
 ../led-wrapper.h:
 ../pixelobject.h:
+../led-matrix.h:
+../gpio.h:

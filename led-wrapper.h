@@ -3,6 +3,7 @@
 
 #include <node.h>
 #include "pixelobject.h"
+#include "led-matrix.h"
 
 class LedWrapper : public node::ObjectWrap {
  public:
@@ -15,6 +16,8 @@ class LedWrapper : public node::ObjectWrap {
   static v8::Handle<v8::Value> New(const v8::Arguments& args);
   static v8::Handle<v8::Value> SetPixels(const v8::Arguments& args);
   static v8::Persistent<v8::Function> constructor;
+
+  static RGBMatrix* m;
 };
 
 #endif
