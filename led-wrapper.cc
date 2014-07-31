@@ -114,14 +114,19 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	// The matrix, our 'frame buffer'.
   	RGBMatrix m(&io);
 
+	Local<v8::Integer> ignore;
   	int tempX = 0;
   	int tempY = 0;
+  	int tempB;
+  	int tempG;
+  	int tempR;
+  	int i = 0;
   	while(i < arrayLength) {
   		//Handle<Object> obj = Handle<Object>::Cast(pixelArray->Get(Integer::New(i)));
-  		ignore = pixelArray->Get(Integer::New(i));
-  		tempB = pixelArray->Get(integer::New(i+1));
-  		tempG = pixelArray->Get(Integer::New(i+2));
-  		tempR = pixelArray->Get(Integer::New(i+3));
+  		ignore = pixelArray->Get(Integer::New(i))->ToInteger();
+  		tempB = pixelArray->Get(Integer::New(i+1))->ToInteger()->Value();
+  		tempG = pixelArray->Get(Integer::New(i+2))->ToInteger()->Value();
+  		tempR = pixelArray->Get(Integer::New(i+3))->ToInteger()->Value();
 
 	  	m.SetPixel(tempX, tempY, tempR, tempG, tempB);
 	  	if(tempX == 127) {
