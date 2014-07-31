@@ -103,8 +103,8 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 
 
 	//<uint32_t>
-	//Local<Uint8Array> pixelArray = Local<Uint8Array>::Cast(args[0]);
-	Array* pixelArray = ObjectWrap::Unwrap<Array>(args[0]->ToObject());
+	Local<Array> pixelArray = Local<Array>::Cast(args[0]);
+	//Array* pixelArray = args[0];
 	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 
 	int arrayLength = pixelArray->Length();

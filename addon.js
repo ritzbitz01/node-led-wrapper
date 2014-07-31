@@ -3,7 +3,7 @@ var addon = require('./build/Release/led-wrapper');
 
 var obj = new addon.LedWrapper();
 
-var pixelArray = new Uint8Array(8);
+var pixelArray = new Array();
 pixelArray[0] = 0;
 pixelArray[1] = 250;
 pixelArray[2] = 250;
