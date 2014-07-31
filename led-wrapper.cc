@@ -33,14 +33,14 @@ Persistent<Function> LedWrapper::constructor;
 LedWrapper::LedWrapper() {
 	fprintf(stderr, "LED MATRIX CONSTRUCTOR GO");
 	// // Create a RgbMatrix and set the pixels
-	// GPIO io;
+	GPIO io;
 	// fprintf(stderr, "GPIO created\n");
- //  	if (!io.Init())
- //    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
+  	if (!io.Init())
+    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
  //    fprintf(stderr, "GPIO SET UP\n");
  //  	// The matrix, our 'frame buffer'.
- //  	m = new RGBMatrix(&io);
+  	m = new RGBMatrix(&io);
 
  //  	// The RGBMatrixManipulator objects are filling
  //  	// the matrix continuously.
@@ -112,14 +112,14 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 	//fprintf(stderr, "obj unwrapped\n");
 	// Create a RgbMatrix and set the pixels
-	GPIO io;
+	// GPIO io;
 	//fprintf(stderr, "GPIO created\n");
-  	if (!io.Init())
-    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
+  	// if (!io.Init())
+   //  	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
     //fprintf(stderr, "GPIO SET UP\n");
   	// The matrix, our 'frame buffer'.
-  	RGBMatrix m(&io);
+  	// RGBMatrix m(&io);
 
 	Local<v8::Integer> ignore;
   	int tempX = 127;
@@ -139,7 +139,7 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   		ignore = pixelArray->Get(Integer::New(i))->ToInteger();
   		i++;
   		
-	  	m.SetPixel(tempX, tempY, tempR, tempG, tempB);
+	  	m->SetPixel(tempX, tempY, tempR, tempG, tempB);
 	  	if(tempX == 0) {
 	  		tempX = 127;
 	  		tempY ++;
@@ -149,7 +149,7 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 
 	}
 	//fprintf(stderr, "UPDATING SCREEN");
-  	m.UpdateScreen();
+  	m->UpdateScreen();
   	//usleep(5000000);
 
   	// m.ClearScreen();
