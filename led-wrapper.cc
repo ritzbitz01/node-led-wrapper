@@ -98,11 +98,11 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	// Arguments can either be a single Pixel, or a Pixel array.
 	HandleScope scope;
 
-	//Local<Array> pixelArray = Local<Array>::Cast(args[0]);
+	Local<Array> pixelArray = Local<Array>::Cast(args[0]);
 
-	//int arrayLength = pixelArray->Length();
-
-	PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
+	int arrayLength = pixelArray->Length();
+	fprintf(stderr, "Pixel array length %d", arrayLength );
+	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 	fprintf(stderr, "obj unwrapped\n");
 	// Create a RgbMatrix and set the pixels
 	GPIO io;
@@ -115,21 +115,21 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	RGBMatrix m(&io);
 
   	//for(int i = 0; i < arrayLength; i++) {
-  	//	Handle<PixelObject> obj = Handle<PixelObject>::Cast(pixelArray->Get(Integer::New(i)));
+  	//	Handle<Object> obj = Handle<Object>::Cast(pixelArray->Get(Integer::New(i)));
   		//pixelArray->Get(Integer::New(i))->ToObject();
   	// fprintf(stderr, "SET PIXEL X: " + obj->x_);
   	// fprintf("SET PIXEL Y: " + obj->y_);
   	// fprintf("SET PIXEL R: " + obj->r_);
   	// fprintf("SET PIXEL G: " + obj->g_);
   	// fprintf("SET PIXEL B: " + obj->b_);
-  	m.SetPixel(obj->x_, obj->y_, obj->r_, obj->g_, obj->b_);
-  	//}
+  	// m.SetPixel(obj->x_, obj->y_, obj->r_, obj->g_, obj->b_);
+  	// //}
 
-  	m.UpdateScreen();
-  	usleep(500000);
+  	// m.UpdateScreen();
+  	// usleep(500000);
 
-  	m.ClearScreen();
-    m.UpdateScreen();
+  	// m.ClearScreen();
+   //  m.UpdateScreen();
 	return scope.Close(Undefined());
 }
 
