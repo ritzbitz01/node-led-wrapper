@@ -107,8 +107,8 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	//Array* pixelArray = args[0];
 	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 
-	//int arrayLength = pixelArray->Length();
-	fprintf(stderr, "Pixel array length %d", arrayLength );
+	int arrayLength = pixelArray->Length();
+	//fprintf(stderr, "Pixel array length %d", arrayLength );
 	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 	//fprintf(stderr, "obj unwrapped\n");
 	// Create a RgbMatrix and set the pixels
