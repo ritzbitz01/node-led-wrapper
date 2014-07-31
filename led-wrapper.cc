@@ -28,19 +28,21 @@ using namespace v8;
 // Pump pixels to screen. Needs to be high priority real-time because jitter
 // here will make the PWM uneven.
 
+RGBMatrix* LedWrapper::m;
+
 Persistent<Function> LedWrapper::constructor;
 
 LedWrapper::LedWrapper() {
 	// fprintf(stderr, "LED MATRIX CONSTRUCTOR GO");
 	// // // Create a RgbMatrix and set the pixels
-	// GPIO io;
+	 GPIO io;
 	// // fprintf(stderr, "GPIO created\n");
- //  	if (!io.Init())
- //    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
+   	if (!io.Init())
+     	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
  //    fprintf(stderr, "GPIO SET UP\n");
  //  	// The matrix, our 'frame buffer'.
-  	//m = new RGBMatrix(&io);
+  	m = new RGBMatrix(&io);
 
  //  	// The RGBMatrixManipulator objects are filling
  //  	// the matrix continuously.
@@ -106,28 +108,28 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	//<uint32_t>
 	Local<Array> pixelArray = Local<Array>::Cast(args[0]);
 
-	Local<Object> obj = args[0]->ToObject();
-	if (obj->GetIndexedPropertiesExternalArrayDataType() != kExternalIntArray) return scope.Close(Undefined());
-	int len = obj->GetIndexedPropertiesExternalArrayDataLength();
-	int* data = static_cast<int*>(obj->GetIndexedPropertiesExternalArrayData());
+	// Local<Object> obj = args[0]->ToObject();
+	// if (obj->GetIndexedPropertiesExternalArrayDataType() != kExternalIntArray) return scope.Close(Undefined());
+	// int len = obj->GetIndexedPropertiesExternalArrayDataLength();
+	// int* data = static_cast<int*>(obj->GetIndexedPropertiesExternalArrayData());
 
-	fprintf(stderr, "Data Value is: %d", data[0]);
+	//fprintf(stderr, "Data Value is: %d", data[0]);
 	//Array* pixelArray = args[0];
 	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 
-	//int arrayLength = pixelArray->Length();
+	int arrayLength = pixelArray->Length();
 	//fprintf(stderr, "Pixel array length %d", arrayLength );
 	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 	//fprintf(stderr, "obj unwrapped\n");
 	// Create a RgbMatrix and set the pixels
-	GPIO io;
+	//GPIO io;
 	//fprintf(stderr, "GPIO created\n");
-  	if (!io.Init())
-    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
+  	//if (!io.Init())
+    //	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
     //fprintf(stderr, "GPIO SET UP\n");
   	//The matrix, our 'frame buffer'.
-  	RGBMatrix m(&io);
+  	//RGBMatrix m(&io);
 
 	Local<v8::Integer> ignore;
   	int tempX = 127;
@@ -136,23 +138,23 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	int tempG;
   	int tempR;
   	int i = 0;
-  //	while(i < arrayLength) {
-  		while(i < len) {
+  	while(i < arrayLength) {
+  //		while(i < len) {
   		//Handle<Object> obj = Handle<Object>::Cast(pixelArray->Get(Integer::New(i)));
-//  		tempR = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
-  			tempR = data[i];
+ 		tempR = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+  			//tempR = data[i];
   		i++;
-  		//tempG = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
-  		tempG = data[i];
+  		tempG = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+  		//tempG = data[i];
   		i++;
-  		//tempB = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
-  		tempB = data[i];
+  		tempB = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+  		//tempB = data[i];
   		i++;
   		//ignore = pixelArray->Get(Integer::New(i))->ToInteger();
   		//ignore = data[i];
   		i++;
   		
-	  	m.SetPixel(tempX, tempY, tempR, tempG, tempB);
+	  	m->SetPixel(tempX, tempY, tempR, tempG, tempB);
 	  	if(tempX == 0) {
 	  		tempX = 127;
 	  		tempY ++;
@@ -162,7 +164,7 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 
 	}
 	//fprintf(stderr, "UPDATING SCREEN");
-  	m.UpdateScreen();
+  	m->UpdateScreen();
   	//usleep(5000000);
 
   	// m.ClearScreen();
