@@ -1,5 +1,6 @@
 #define BUILDING_NODE_EXTENSION
 #include <node.h>
+#include <node_buffer.h>
 #include <v8.h>
 #include <unistd.h>
 #include "led-wrapper.h"
@@ -98,6 +99,10 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	// Arguments can either be a single Pixel, or a Pixel array.
 	HandleScope scope;
 
+	//TypedArrayWrapper pixelArray = ObjectWrap::Unwrap<TypedArrayWrapper>(args[0]->ToObject());
+
+
+	//<uint32_t>
 	Local<Array> pixelArray = Local<Array>::Cast(args[0]);
 
 	int arrayLength = pixelArray->Length();
