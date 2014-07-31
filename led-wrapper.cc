@@ -30,26 +30,27 @@ using namespace v8;
 Persistent<Function> LedWrapper::constructor;
 
 LedWrapper::LedWrapper() {
-	// Create a RgbMatrix and set the pixels
-	GPIO io;
-	fprintf(stderr, "GPIO created\n");
-  	if (!io.Init())
-    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
+	fprintf(stderr, "LED MATRIX CONSTRUCTOR GO");
+	// // Create a RgbMatrix and set the pixels
+	// GPIO io;
+	// fprintf(stderr, "GPIO created\n");
+ //  	if (!io.Init())
+ //    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
-    fprintf(stderr, "GPIO SET UP\n");
-  	// The matrix, our 'frame buffer'.
-  	m = new RGBMatrix(&io);
+ //    fprintf(stderr, "GPIO SET UP\n");
+ //  	// The matrix, our 'frame buffer'.
+ //  	m = new RGBMatrix(&io);
 
-  	// The RGBMatrixManipulator objects are filling
-  	// the matrix continuously.
-  	//RGBMatrixManipulator *image_gen = NULL;
+ //  	// The RGBMatrixManipulator objects are filling
+ //  	// the matrix continuously.
+ //  	//RGBMatrixManipulator *image_gen = NULL;
 
-  	// the DisplayUpdater continuously pushes the matrix
-  	// content to the display.
-  	RGBMatrixManipulator *updater = new DisplayUpdater(m);
-  	updater->Start(10);   // high priority
+ //  	// the DisplayUpdater continuously pushes the matrix
+ //  	// content to the display.
+ //  	RGBMatrixManipulator *updater = new DisplayUpdater(m);
+ //  	updater->Start(10);   // high priority
 
-  	//image_gen->Start();
+ //  	//image_gen->Start();
 }
 
 LedWrapper::~LedWrapper() {
@@ -58,8 +59,8 @@ LedWrapper::~LedWrapper() {
 
   // Final thing before exit: clear screen and update once, so that
   // we don't have random pixels burn
-  m->ClearScreen();
-  m->UpdateScreen();
+  //m->ClearScreen();
+  //m->UpdateScreen();
 }
 
 void LedWrapper::Init(Handle<Object> exports) {
@@ -104,26 +105,31 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 	fprintf(stderr, "obj unwrapped\n");
 	// Create a RgbMatrix and set the pixels
-	// GPIO io;
-	// fprintf(stderr, "GPIO created\n");
- //  	if (!io.Init())
- //    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
+	GPIO io;
+	fprintf(stderr, "GPIO created\n");
+  	if (!io.Init())
+    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
- //    fprintf(stderr, "GPIO SET UP\n");
- //  	// The matrix, our 'frame buffer'.
- //  	RGBMatrix m(&io);
+    fprintf(stderr, "GPIO SET UP\n");
+  	// The matrix, our 'frame buffer'.
+  	RGBMatrix m(&io);
 
   	//for(int i = 0; i < arrayLength; i++) {
   	//	Handle<PixelObject> obj = Handle<PixelObject>::Cast(pixelArray->Get(Integer::New(i)));
   		//pixelArray->Get(Integer::New(i))->ToObject();
-  	// fprintf("SET PIXEL X: " + obj->x_);
+  	// fprintf(stderr, "SET PIXEL X: " + obj->x_);
   	// fprintf("SET PIXEL Y: " + obj->y_);
   	// fprintf("SET PIXEL R: " + obj->r_);
   	// fprintf("SET PIXEL G: " + obj->g_);
   	// fprintf("SET PIXEL B: " + obj->b_);
-  	m->SetPixel(obj->x_, obj->y_, obj->r_, obj->g_, obj->b_);
+  	m.SetPixel(obj->x_, obj->y_, obj->r_, obj->g_, obj->b_);
   	//}
-  	sleep(5000);
+
+  	m.UpdateScreen();
+  	usleep(5000000);
+
+  	  m.ClearScreen();
+  m.UpdateScreen();
 	return scope.Close(Undefined());
 }
 
