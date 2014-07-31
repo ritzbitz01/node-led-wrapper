@@ -31,12 +31,12 @@ using namespace v8;
 Persistent<Function> LedWrapper::constructor;
 
 LedWrapper::LedWrapper() {
-	fprintf(stderr, "LED MATRIX CONSTRUCTOR GO");
-	// // Create a RgbMatrix and set the pixels
-	GPIO io;
-	// fprintf(stderr, "GPIO created\n");
-  	if (!io.Init())
-    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
+	// fprintf(stderr, "LED MATRIX CONSTRUCTOR GO");
+	// // // Create a RgbMatrix and set the pixels
+	// GPIO io;
+	// // fprintf(stderr, "GPIO created\n");
+ //  	if (!io.Init())
+ //    	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
  //    fprintf(stderr, "GPIO SET UP\n");
  //  	// The matrix, our 'frame buffer'.
@@ -60,9 +60,9 @@ LedWrapper::~LedWrapper() {
 
   // Final thing before exit: clear screen and update once, so that
   // we don't have random pixels burn
-  m->ClearScreen();
-  m->UpdateScreen();
-  delete m;
+  // m->ClearScreen();
+  // m->UpdateScreen();
+  // delete m;
 }
 
 void LedWrapper::Init(Handle<Object> exports) {
