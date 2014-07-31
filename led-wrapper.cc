@@ -152,8 +152,8 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	m.UpdateScreen();
   	//usleep(5000000);
 
-  	//m.ClearScreen();
-    //m.UpdateScreen();
+  	m.ClearScreen();
+    m.UpdateScreen();
 	return scope.Close(Undefined());
 }
 
