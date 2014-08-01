@@ -20,6 +20,7 @@ class LedWrapper : public node::ObjectWrap {
 
   static RGBMatrix* m;
   static RGBMatrixManipulator* updater;
+  static GPIO io;
 };
 
 #endif
