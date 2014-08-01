@@ -150,8 +150,8 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	//RGBMatrix m2(&io);
 
 	Local<v8::Integer> ignore;
-  	int tempX = 0;
-  	int tempY = 0;
+  	int tempX = 127;
+  	int tempY = 31;
   	uint8_t* tempB;
   	uint8_t* tempG;
   	uint8_t* tempR;
@@ -195,10 +195,10 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   		//m2.SetPixel(tempX, tempY, tempR, tempG, tempB);
 	  	m->SetPixel(tempX, tempY, *tempR, *tempG, *tempB);
 	  	if(tempX == 0) {
-	  		tempX = 0;
-	  		tempY ++;
+	  		tempX = 127;
+	  		tempY --;
 	  	} else {
-	  		tempX ++;
+	  		tempX --;
 	  	}
 
 	}
