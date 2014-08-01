@@ -35,14 +35,14 @@ Persistent<Function> LedWrapper::constructor;
 LedWrapper::LedWrapper() {
 	// fprintf(stderr, "LED MATRIX CONSTRUCTOR GO");
 	// // // Create a RgbMatrix and set the pixels
-	 GPIO io;
+	 //GPIO io;
 	// // fprintf(stderr, "GPIO created\n");
-   	if (!io.Init())
-     	fprintf(stderr, "ERROR SETTING UP GPIO\n");
+   	//if (!io.Init())
+     	//fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
  //    fprintf(stderr, "GPIO SET UP\n");
  //  	// The matrix, our 'frame buffer'.
-  	m = new RGBMatrix(&io);
+  	//m = new RGBMatrix(&io);
 
  //  	// The RGBMatrixManipulator objects are filling
  //  	// the matrix continuously.
@@ -78,6 +78,14 @@ void LedWrapper::Init(Handle<Object> exports) {
        FunctionTemplate::New(SetPixels)->GetFunction());
   constructor = Persistent<Function>::New(tpl->GetFunction());
   exports->Set(String::NewSymbol("LedWrapper"), constructor);
+  	 GPIO io;
+	// // fprintf(stderr, "GPIO created\n");
+   	if (!io.Init())
+     	fprintf(stderr, "ERROR SETTING UP GPIO\n");
+
+ //    fprintf(stderr, "GPIO SET UP\n");
+ //  	// The matrix, our 'frame buffer'.
+  	m = new RGBMatrix(&io);
 }
 
 Handle<Value> LedWrapper::New(const Arguments& args) {
@@ -129,7 +137,7 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 
     //fprintf(stderr, "GPIO SET UP\n");
   	//The matrix, our 'frame buffer'.
-  	RGBMatrix m2(&io);
+  	//RGBMatrix m2(&io);
 
 	Local<v8::Integer> ignore;
   	int tempX = 127;
@@ -154,8 +162,8 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   		//ignore = data[i];
   		i++;
   		
-  		m2.SetPixel(tempX, tempY, tempR, tempG, tempB);
-	  	//m->SetPixel(tempX, tempY, tempR, tempG, tempB);
+  		//m2.SetPixel(tempX, tempY, tempR, tempG, tempB);
+	  	m->SetPixel(tempX, tempY, tempR, tempG, tempB);
 	  	if(tempX == 0) {
 	  		tempX = 127;
 	  		tempY ++;
@@ -165,8 +173,8 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 
 	}
 	//fprintf(stderr, "UPDATING SCREEN");
-	m2.UpdateScreen();
-  	//m->UpdateScreen();
+	//m2.UpdateScreen();
+  	m->UpdateScreen();
   	//usleep(5000000);
 
   	// m.ClearScreen();
