@@ -189,6 +189,8 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 //  		//ignore = pixelArray->Get(Integer::New(i))->ToInteger();
 //  		//ignore = data[i];
 //  		i++;
+
+		fprintf(stderr, "x: %d y:%d R:%d G:%d B:%d", tempX, tempY, *tempR, *tempG, *tempB);
   		
   		//m2.SetPixel(tempX, tempY, tempR, tempG, tempB);
 	  	m->SetPixel(tempX, tempY, *tempR, *tempG, *tempB);
