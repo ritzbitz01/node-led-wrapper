@@ -35,14 +35,14 @@ Persistent<Function> LedWrapper::constructor;
 LedWrapper::LedWrapper() {
 	// fprintf(stderr, "LED MATRIX CONSTRUCTOR GO");
 	// // // Create a RgbMatrix and set the pixels
-	 //GPIO io;
-	// // fprintf(stderr, "GPIO created\n");
-   	//if (!io.Init())
-     	//fprintf(stderr, "ERROR SETTING UP GPIO\n");
+	 GPIO io;
+	// fprintf(stderr, "GPIO created\n");
+   	if (!io.Init())
+     	fprintf(stderr, "ERROR SETTING UP GPIO\n");
 
- //    fprintf(stderr, "GPIO SET UP\n");
- //  	// The matrix, our 'frame buffer'.
-  	//m = new RGBMatrix(&io);
+     fprintf(stderr, "GPIO SET UP\n");
+   	// The matrix, our 'frame buffer'.
+  	m = new RGBMatrix(&io);
 
  //  	// The RGBMatrixManipulator objects are filling
  //  	// the matrix continuously.
@@ -78,23 +78,17 @@ void LedWrapper::Init(Handle<Object> exports) {
        FunctionTemplate::New(SetPixels)->GetFunction());
   constructor = Persistent<Function>::New(tpl->GetFunction());
   exports->Set(String::NewSymbol("LedWrapper"), constructor);
-  	 GPIO io;
-	// // fprintf(stderr, "GPIO created\n");
-   	if (!io.Init())
-     	fprintf(stderr, "ERROR SETTING UP GPIO\n");
-
- //    fprintf(stderr, "GPIO SET UP\n");
- //  	// The matrix, our 'frame buffer'.
-  	m = new RGBMatrix(&io);
 }
 
 Handle<Value> LedWrapper::New(const Arguments& args) {
   HandleScope scope;
 
+  LedWrapper* obj = new LedWrapper();
+
   if (args.IsConstructCall()) {
     // Invoked as constructor: `new MyObject(...)`
     //double value = args[0]->IsUndefined() ? 0 : args[0]->NumberValue();
-    LedWrapper* obj = new LedWrapper();
+
     obj->Wrap(args.This());
     return args.This();
   } else {
@@ -103,6 +97,10 @@ Handle<Value> LedWrapper::New(const Arguments& args) {
     Local<Value> argv[argc] = { args[0] };
     return scope.Close(constructor->NewInstance(argc, argv));
   }
+    // the DisplayUpdater continuously pushes the matrix
+  	// content to the display.
+  	RGBMatrixManipulator *updater = new DisplayUpdater(obj->m);
+  	updater->Start(10);   // high priority
 }
 
 Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
@@ -174,7 +172,7 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	}
 	//fprintf(stderr, "UPDATING SCREEN");
 	//m2.UpdateScreen();
-  	m->UpdateScreen();
+//  	m->UpdateScreen();
   	//usleep(5000000);
 
   	// m.ClearScreen();
