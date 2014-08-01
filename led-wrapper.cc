@@ -152,9 +152,9 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	Local<v8::Integer> ignore;
   	int tempX = 127;
   	int tempY = 0;
-  	int* tempB;
-  	int* tempG;
-  	int* tempR;
+  	uint8_t* tempB;
+  	uint8_t* tempG;
+  	uint8_t* tempR;
   	int i = 0;
 
   	while(i < arrayLength) {
@@ -162,15 +162,15 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	// first value is alpha... drop it
   	i++;
 
-  	tempB = &((int*) pixelArrayBuffer->GetIndexedPropertiesExternalArrayData())[i];
+  	tempB = &((uint8_t*) pixelArrayBuffer->GetIndexedPropertiesExternalArrayData())[i];
 
 	i++;
 
-	tempG = &((int*) pixelArrayBuffer->GetIndexedPropertiesExternalArrayData())[i];
+	tempG = &((uint8_t*) pixelArrayBuffer->GetIndexedPropertiesExternalArrayData())[i];
 
 	i++;
 
-	tempR = &((int*) pixelArrayBuffer->GetIndexedPropertiesExternalArrayData())[i];
+	tempR = &((uint8_t*) pixelArrayBuffer->GetIndexedPropertiesExternalArrayData())[i];
 
 	i++;
 
