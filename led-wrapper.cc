@@ -71,9 +71,10 @@ LedWrapper::~LedWrapper() {
 
   // Final thing before exit: clear screen and update once, so that
   // we don't have random pixels burn
-  // m->ClearScreen();
-  // m->UpdateScreen();
-  // delete m;
+  m->ClearScreen();
+  m->UpdateScreen();
+  delete m;
+  delete updater;
 }
 
 void LedWrapper::Init(Handle<Object> exports) {
@@ -117,9 +118,14 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 
 
 	//<uint32_t>
-	Local<Array> pixelArray = Local<Array>::Cast(args[0]);
+//	Local<Array> pixelArray = Local<Array>::Cast(args[0]);
 
-	// Local<Object> obj = args[0]->ToObject();
+	Local<Object> pixelArray = args[0]->ToObject();
+	Handle<Object> pixelArrayBuffer = pixelArray->Get(String::New("buffer"))->ToObject();
+	int arrayLength = pixelArray->Get(String::New("byteLength"))->Uint32Value();
+
+	Local<Array> data;
+
 	// if (obj->GetIndexedPropertiesExternalArrayDataType() != kExternalIntArray) return scope.Close(Undefined());
 	// int len = obj->GetIndexedPropertiesExternalArrayDataLength();
 	// int* data = static_cast<int*>(obj->GetIndexedPropertiesExternalArrayData());
@@ -128,7 +134,8 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	//Array* pixelArray = args[0];
 	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 
-	int arrayLength = pixelArray->Length();
+
+//	int arrayLength = pixelArray->Length();
 	//fprintf(stderr, "Pixel array length %d", arrayLength );
 	//PixelObject* obj = ObjectWrap::Unwrap<PixelObject>(args[0]->ToObject());
 	//fprintf(stderr, "obj unwrapped\n");
@@ -145,28 +152,46 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 	Local<v8::Integer> ignore;
   	int tempX = 127;
   	int tempY = 0;
-  	int tempB;
-  	int tempG;
-  	int tempR;
+  	int* tempB;
+  	int* tempG;
+  	int* tempR;
   	int i = 0;
+
   	while(i < arrayLength) {
-  //		while(i < len) {
-  		//Handle<Object> obj = Handle<Object>::Cast(pixelArray->Get(Integer::New(i)));
- 		tempR = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
-  			//tempR = data[i];
-  		i++;
-  		tempG = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
-  		//tempG = data[i];
-  		i++;
-  		tempB = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
-  		//tempB = data[i];
-  		i++;
-  		//ignore = pixelArray->Get(Integer::New(i))->ToInteger();
-  		//ignore = data[i];
-  		i++;
+
+  	// first value is alpha... drop it
+  	i++;
+
+  	tempB = &((int*) pixelArrayBuffer->GetIndexedPropertiesExternalArrayData())[i];
+
+	i++;
+
+	tempG = &((int*) pixelArrayBuffer->GetIndexedPropertiesExternalArrayData())[i];
+
+	i++;
+
+	tempR = &((int*) pixelArrayBuffer->GetIndexedPropertiesExternalArrayData())[i];
+
+	i++;
+
+
+//  //		while(i < len) {
+//  		//Handle<Object> obj = Handle<Object>::Cast(pixelArray->Get(Integer::New(i)));
+// 		tempR = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+//  			//tempR = data[i];
+//  		i++;
+//  		tempG = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+//  		//tempG = data[i];
+//  		i++;
+//  		tempB = pixelArray->Get(Integer::New(i))->ToInteger()->Value();
+//  		//tempB = data[i];
+//  		i++;
+//  		//ignore = pixelArray->Get(Integer::New(i))->ToInteger();
+//  		//ignore = data[i];
+//  		i++;
   		
   		//m2.SetPixel(tempX, tempY, tempR, tempG, tempB);
-	  	m->SetPixel(tempX, tempY, tempR, tempG, tempB);
+	  	m->SetPixel(tempX, tempY, *tempR, *tempG, *tempB);
 	  	if(tempX == 0) {
 	  		tempX = 127;
 	  		tempY ++;
