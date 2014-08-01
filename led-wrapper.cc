@@ -150,7 +150,7 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
   	//RGBMatrix m2(&io);
 
 	Local<v8::Integer> ignore;
-  	int tempX = 127;
+  	int tempX = 0;
   	int tempY = 0;
   	uint8_t* tempB;
   	uint8_t* tempG;
@@ -190,15 +190,15 @@ Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
 //  		//ignore = data[i];
 //  		i++;
 
-		fprintf(stderr, "x: %d y:%d R:%d G:%d B:%d \n", tempX, tempY, *tempR, *tempG, *tempB);
+//		fprintf(stderr, "x: %d y:%d R:%d G:%d B:%d \n", tempX, tempY, *tempR, *tempG, *tempB);
   		
   		//m2.SetPixel(tempX, tempY, tempR, tempG, tempB);
 	  	m->SetPixel(tempX, tempY, *tempR, *tempG, *tempB);
 	  	if(tempX == 0) {
-	  		tempX = 127;
+	  		tempX = 0;
 	  		tempY ++;
 	  	} else {
-	  		tempX --;
+	  		tempX ++;
 	  	}
 
 	}
