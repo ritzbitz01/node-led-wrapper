@@ -4,6 +4,7 @@
 #include <node.h>
 #include "pixelobject.h"
 #include "led-matrix.h"
+#include "rgbmatrixmanipulator.h"
 
 class LedWrapper : public node::ObjectWrap {
  public:
@@ -18,6 +19,7 @@ class LedWrapper : public node::ObjectWrap {
   static v8::Persistent<v8::Function> constructor;
 
   static RGBMatrix* m;
+  static RGBMatrixManipulator* updater;
 };
 
 #endif

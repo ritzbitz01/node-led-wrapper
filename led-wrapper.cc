@@ -30,6 +30,8 @@ using namespace v8;
 
 RGBMatrix* LedWrapper::m;
 
+RGBMatrixManipulator* LedWrapper::updater;
+
 Persistent<Function> LedWrapper::constructor;
 
 LedWrapper::LedWrapper() {
@@ -99,7 +101,7 @@ Handle<Value> LedWrapper::New(const Arguments& args) {
   }
     // the DisplayUpdater continuously pushes the matrix
   	// content to the display.
-  	RGBMatrixManipulator *updater = new DisplayUpdater(obj->m);
+  	obj->updater = new DisplayUpdater(obj->m);
   	updater->Start(10);   // high priority
 }
 
