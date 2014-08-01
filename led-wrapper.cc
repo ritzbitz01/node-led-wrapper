@@ -109,7 +109,6 @@ Handle<Value> LedWrapper::New(const Arguments& args) {
 }
 
 Handle<Value> LedWrapper::SetPixels(const Arguments& args) {
-	fprintf(stderr, "CALLING SET PIXELS\n");
 	// Arguments can either be a single Pixel, or a Pixel array.
 	HandleScope scope;
 
